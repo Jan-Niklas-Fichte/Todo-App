@@ -1,0 +1,85 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css"  href="{% static 'todos/todo_overview.css' %}" >
+<div>
+    <h1 style="text-align: center;" >Todos</h1>
+    {% if  not todos %}
+    <div class="container todo" >
+    <div class="row custom-border-bottom">
+        <div class="col-sm">
+            <p style="text-align: center">You have no Todos in your List.
+                </p>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+    {% for todo in todos %}
+    <div class="container todo" >
+        <div class="row custom-border-bottom">
+            <div class="col-sm">
+                <h3 style="text-align: center">{{todo.headline}}</h3>
+            </div>
+        </div>
+        <div class="row custom-border-bottom" >
+            <div class="col-sm">
+                <p>{{todo.description}}</p>
+            </div>
+        </div>
+        <div class="row custom-border-bottom">
+            <div class="col-sm-4">
+                <p> <span style="font-weight: bold">Deadline:</span> {{todo.deadline | date:"d.m.Y"}}</p>
+            </div>
+            <div class="col-sm-4">
+
+            </div>
+            <div class="col-sm-4">
+                <p><span style="font-weight: bold">Recurring:</span> {{todo.recurring}} </p>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    {% endfor %}
+    <div class="container " >
+    <div class="row">
+        <div class="col-sm-10">
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#todoModal">
+                Add Todo
+            </button>
+        </div>
+    </div>
+    </div>
+</div>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="todoModal" tabindex="-1" aria-labelledby="todoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div >
+                    <form method="post" >
+                        <div class="container todo" >
+                            <h1>Create new Todo</h1>
+                            {% csrf_token %}
+                            {{ form | crispy }}
+                        </div>
+                        <button type="submit" style="float: right;" class="btn btn-primary">Save Todo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

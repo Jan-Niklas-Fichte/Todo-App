@@ -1,0 +1,12 @@
+.custom-border-bottom{
+    border-bottom: 1px solid black;
+}
+.todo{
+    background-color: #3C3B97;
+    border-style: solid;
+    color: white;
+}
+
+.custom-bold{
+    font-weight: bold;
+}
